@@ -2,6 +2,7 @@ const { response } = require('express');
 const express = require('express');
 const { request } = require('http');
 const app = express();
+app.use(express.json());
 
 
 
@@ -56,6 +57,21 @@ app.delete('/api/persons/:id', (request, response) => {
   persons = persons.filter(person => person.id !== id);
 
   response.status(204).end();
+});
+
+const generateRandomId = () => {
+  return Math.floor(Math.random() * 1000);
+}
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body;
+  const newPerson = {
+    name: body.name,
+    number: body.number,
+    id: generateRandomId()
+  }
+  persons = persons.concat(newPerson);
+  response.json(persons);
 });
 
 const PORT = 3001;
