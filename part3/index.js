@@ -1,7 +1,8 @@
 const { response } = require('express');
 const express = require('express');
-const { request } = require('http');
+const morgan = require('morgan');
 const app = express();
+app.use(morgan('tiny'));
 app.use(express.json());
 
 
