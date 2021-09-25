@@ -31,6 +31,15 @@ app.get('/api/persons', (req, res) => {
     res.json(persons);
 });
 
+app.get('/info', (req, res) => {
+    const date = Date();
+    const nrPeople = persons.length;
+    res.status(200).send(`
+        <p> Phonebook has info for ${nrPeople} people</p>
+        <p>${date}</p>
+    `);
+});
+
 const PORT  = 3001;
 app.listen(PORT,() => {
     console.log(`backend listens on port ${PORT}`);
