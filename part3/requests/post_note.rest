@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "Ma Poppendick",
+    "important": "39-23-6423122"
+}
