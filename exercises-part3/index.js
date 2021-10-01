@@ -51,6 +51,11 @@ app.get('/info', (req, res) => {
     `);
 });
 
+app.delete('/api/person/:id', (req, res) => {
+    persons = persons.filter(p => p.id !== +req.params.id);
+    res.json(persons);
+});
+
 const PORT  = 3001;
 app.listen(PORT,() => {
     console.log(`backend listens on port ${PORT}`);
