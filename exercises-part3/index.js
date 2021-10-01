@@ -56,6 +56,30 @@ app.delete('/api/person/:id', (req, res) => {
     res.json(persons);
 });
 
+app.post('/api/persons',(req, res) => {
+    if(req.body.name && req.body.number){
+        if(!persons.find(p => p.name === req.body.name)){
+            const newPerson = {
+                id: Math.floor(Math.random()*200),
+                name: req.body.name,
+                number: req.body.number
+            }
+            persons.push(newPerson);
+            res.json(persons);
+        }
+        else {
+            res.status(400).send({
+                error: 'name must be unique'
+            });
+        }
+        
+    }
+    else {
+        res.status(400).send('name and number most exist');
+    }
+    
+});
+
 const PORT  = 3001;
 app.listen(PORT,() => {
     console.log(`backend listens on port ${PORT}`);
