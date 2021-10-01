@@ -31,6 +31,17 @@ app.get('/api/persons', (req, res) => {
     res.json(persons);
 });
 
+// fix for exercise 3.3
+app.get('/api/person/:id', (req, res) => {
+    const person = persons.filter(p => p.id === +req.params.id);
+    if(person.length > 0){
+        res.json(person);
+    }
+    else{
+        res.status(404).send('person not found');
+    }
+})
+
 app.get('/info', (req, res) => {
     const date = Date();
     const nrPeople = persons.length;
