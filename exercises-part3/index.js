@@ -3,8 +3,23 @@ const morgan = require('morgan');
 
 
 const app = express();
-app.use(morgan('tiny'));
+//app.use(morgan('tiny'));
 app.use(express.json());
+
+morgan.token('json', function getId (req) {
+    return req.json
+})
+
+const jsonfunc = (req, res, next) => {
+    req.json = JSON.stringify(req.body);
+    next();
+}
+app.use(jsonfunc);
+app.use(morgan(`
+:method :url :status :res[content-length] - :response-time ms :json`
+));
+
+
 
 let persons = [
     { 
