@@ -6,6 +6,16 @@ const app = express();
 
 app.use(express.json()); // middleware that looks at http header and if it is of type json it parses it and attach it to the req body
 
+const requestLogger = (req, res, next) => {
+  console.log('Method:', req.method)
+  console.log('Path:  ', req.path)
+  console.log('Body:  ', req.body)
+  console.log('---')
+  next()
+};
+
+app.use(requestLogger);
+
 
 let notes = [  
   {    
@@ -77,6 +87,12 @@ app.post('/api/notes', (req, res) => {
   notes = notes.concat(note);
   res.json(note);
 });
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
 
 const PORT =  3001;
 app.listen(PORT, () => {
